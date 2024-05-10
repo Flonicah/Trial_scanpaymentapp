@@ -34,23 +34,20 @@ public class MainActivity extends AppCompatActivity {
         options.setBeepEnabled(true);
         options.setOrientationLocked(true);
         options.setCaptureActivity(CaptureAct.class);
-        barlaucher.launch(options);
+        barLauncher.launch(options);
     }
-    ActivityResultLauncher<ScanOptions> barlaucher = registerForActivityResult(new ScanContract(), result->{
-    if(result.getContents() != null)
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("result");
-        builder.setMessage(result.getContents());
-        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-               dialogInterface.dismiss();
-            }
-        }).show();
-    }
-});
-
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
+        if (result != null && result.getContents() != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Result");
+            builder.setMessage(result.getContents());
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss(); // Dismiss the dialog
+                }
+            }).show();
         }
+    });
+
+}
